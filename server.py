@@ -1,6 +1,4 @@
-
-
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import os
 import re
 
@@ -11,8 +9,7 @@ ONEDRIVE_PATH = r"C:\Users\mysta\OneDrive\JW BroadcastIndex"
 
 @app.route('/')
 def home():
-    return "Welcome to the Broadcast Index API. Use /search?q=<your_query> to search."
-
+    return send_from_directory('.', 'index.html')  # Serves index.html from the current directory
 
 @app.route('/search')
 def search():
