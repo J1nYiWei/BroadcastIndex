@@ -18,7 +18,7 @@ def search():
         print("No query provided")
         return jsonify([])
 
-    print(f"Received search query: '{query}'")  # Log the received query
+    print(f"Received search query: '{query}'")
     results = []
 
     for root, _, files in os.walk(ONEDRIVE_PATH):
@@ -30,6 +30,7 @@ def search():
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         content = f.read()
+                        print(f"Content of {file_path}: {content[:100]}")  # Log the first 100 chars
 
                         # Find all occurrences of the query
                         matches = [m for m in re.finditer(re.escape(query), content, re.IGNORECASE)]
@@ -48,8 +49,9 @@ def search():
                 except Exception as e:
                     print(f"Error reading {file_path}: {e}")
 
-    print(f"Search results: {results}")  # Log the results before returning
+    print(f"Search results: {results}")
     return jsonify(results)
+
 
 
 if __name__ == '__main__':
