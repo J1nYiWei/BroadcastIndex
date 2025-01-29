@@ -5,45 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OneDrive Text Search</title>
     <script>
-        async function searchFiles() {
-            let query = document.getElementById("searchBox").value.trim(); // Trim any extra spaces
-            if (!query) {
-                alert("Enter a search term!");
-                return;
-            }
-    
-            console.log("Sending search request for:", query); // Log the query being sent
-    
-            try {
-                let response = await fetch(`/search?q=${encodeURIComponent(query)}`);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-    
-                let results = await response.json();
-                console.log("Search response:", results); // Log the response from the server
-    
-                let resultArea = document.getElementById("results");
-                resultArea.innerHTML = ""; // Clear old results
-    
-                if (results.length === 0) {
-                    resultArea.innerHTML = "<p>No results found.</p>";
-                } else {
-                    results.forEach(file => {
-                        let div = document.createElement("div");
-                        div.innerHTML = `<h3>${file.file}</h3>`;
-                        file.matches.forEach(match => {
-                            div.innerHTML += `<p>${match}</p>`;
-                        });
-                        resultArea.appendChild(div);
-                    });
-                }
-            } catch (error) {
-                console.error("Error during search:", error); // Log any errors that occur
-                alert("An error occurred while processing your search. Please try again later.");
-            }
+       async function searchFiles() {
+    let query = document.getElementById("searchBox").value.trim();
+    if (!query) {
+        alert("Enter a search term!");
+        return;
+    }
+
+    try {
+        console.log("Sending search request for:", query); // Debug log
+        let response = await fetch(`https://broadcastindex.onrender.com/search?q=${encodeURIComponent(query)}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        let results = await response.json();
+        console.log("Search response:", results); // Debug log
+
+        let resultArea = document.getElementById("results");
+        resultArea.innerHTML = ""; // Clear old results
+
+        if (results.length === 0) {
+            resultArea.innerHTML = "<p>No results found.</p>";
+        } else {
+            results.forEach(file => {
+                let div = document.createElement("div");
+                div.innerHTML = `<h3>${file.file}</h3>`;
+                file.matches.forEach(match => {
+                    div.innerHTML += `<p>${match}</p>`;
+                });
+                resultArea.appendChild(div);
+            });
+        }
+    } catch (error) {
+        console.error("Error during search:", error); // Log any errors
+        alert("An error occurred while processing your search.");
+    }
+}
+
     
         function clearSearch() {
             document.getElementById("searchBox").value = "";
@@ -56,36 +56,38 @@
         font-family: Verdana, sans-serif;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        height: 100vh;
         margin: 0;
+        padding: 20px;
         background-color: #f9f9f9;
     }
 
     form {
-        margin-bottom: 20px;
-        text-align: center;
-    }
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between input and buttons */
+}
 
-    input, button {
-        font-family: inherit;
-        font-size: 16px;
-        padding: 10px;
-        margin: 5px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+input, button {
+    font-family: inherit;
+    font-size: 16px;
+    padding: 10px;
+    margin: 0; /* Remove margin for better alignment */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
 
-    button {
-        cursor: pointer;
-        background-color: #007BFF;
-        color: white;
-    }
+button {
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+}
 
-    button:hover {
-        background-color: #0056b3;
-    }
+button:hover {
+    background-color: #0056b3;
+}
 
     #results {
         width: 80%;
@@ -96,6 +98,8 @@
         border: 1px solid #ccc;
         border-radius: 5px;
         background-color: white;
+        overflow-y: auto; /* Allow scrolling if results overflow */
+        max-height: 60vh; /* Limit height of the results box */
     }
 
     mark {
@@ -107,9 +111,11 @@
 </head>
 <body>
     <h1>Search OneDrive Files</h1>
-    <input type="text" id="searchBox" placeholder="Enter text to search...">
-    <button onclick="searchFiles()">Search</button>
-    <button onclick="clearSearch()">Clear</button>
+    <form onsubmit="event.preventDefault(); searchFiles();">
+        <input type="text" id="searchBox" placeholder="Enter your search term...">
+        <button type="button" onclick="searchFiles()">Search</button>
+        <button type="button" onclick="clearSearch()">Clear</button>
+    </form>
     <div id="results"></div>
 </body>
 </html>
