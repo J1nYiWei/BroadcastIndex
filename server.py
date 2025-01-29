@@ -26,22 +26,20 @@ def search():
                 file_path = os.path.join(root, file)
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
-                        content = f.read()
+                        content = f.readlines()  # Read the file line by line
 
-                        # Split content into paragraphs
-                        paragraphs = content.split("\n\n")  # Assuming paragraphs are separated by double newlines
                         matches_found = []
 
-                        for paragraph in paragraphs:
-                            if re.search(re.escape(query), paragraph, re.IGNORECASE):
-                                # Highlight the query in the paragraph
-                                highlighted_paragraph = re.sub(
+                        for line in content:
+                            if re.search(re.escape(query), line, re.IGNORECASE):
+                                # Highlight the query in the line
+                                highlighted_line = re.sub(
                                     re.escape(query),
                                     f"<mark>{query}</mark>",
-                                    paragraph,
+                                    line,
                                     flags=re.IGNORECASE
                                 )
-                                matches_found.append(highlighted_paragraph)
+                                matches_found.append(highlighted_line.strip())
 
                         if matches_found:
                             results.append({
@@ -52,6 +50,7 @@ def search():
                     print(f"Error reading {file_path}: {e}")
 
     return jsonify(results)
+
 
 
 
