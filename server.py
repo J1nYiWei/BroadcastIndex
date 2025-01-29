@@ -35,8 +35,16 @@ def search():
                             for match in matches:
                                 start = max(match.start() - 50, 0)
                                 end = min(match.end() + 50, len(content))
-                                context = content[start:end].replace("\n", " ") + "..."
-                                occurrences.append(f"...{context}...")
+                                context = content[start:end].replace("\n", " ")
+
+                                # Highlight the query in the context
+                                highlighted = re.sub(
+                                    re.escape(query), 
+                                    f"<mark>{query}</mark>", 
+                                    context, 
+                                    flags=re.IGNORECASE
+                                )
+                                occurrences.append(f"...{highlighted}...")
 
                             results.append({
                                 "file": file,
@@ -46,6 +54,7 @@ def search():
                     print(f"Error reading {file_path}: {e}")
 
     return jsonify(results)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
