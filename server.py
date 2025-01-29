@@ -1,15 +1,16 @@
+from flask import Flask, request, jsonify, send_from_directory
 import os
-from flask import Flask, request, jsonify
 import re
 
 app = Flask(__name__)
 
-# Set the path to the 'files' directory in your repository
+# Set the path to the 'files' directory
 ONEDRIVE_PATH = os.path.join(os.path.dirname(__file__), 'files')
 
 @app.route('/')
 def home():
-    return "Welcome to the Broadcast Index API. Use /search?q=<your_query> to search."
+    # Serve the index.html file
+    return send_from_directory('.', 'index.html')
 
 @app.route('/search')
 def search():
