@@ -1,3 +1,5 @@
+
+
 from flask import Flask, request, jsonify
 import os
 import re
@@ -6,6 +8,10 @@ app = Flask(__name__)
 
 # Set OneDrive folder path
 ONEDRIVE_PATH = r"C:\Users\mysta\OneDrive\JW BroadcastIndex"
+
+@app.route('/')
+def home():
+    return "Welcome to the Broadcast Index API. Use /search?q=<your_query> to search."
 
 
 @app.route('/search')
