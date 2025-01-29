@@ -13,18 +13,14 @@
     }
 
     try {
-        console.log("Sending search request for:", query); // Debug log
         let response = await fetch(`https://broadcastindex.onrender.com/search?q=${encodeURIComponent(query)}`);
-        
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         let results = await response.json();
-        console.log("Search response:", results); // Debug log
-
         let resultArea = document.getElementById("results");
-        resultArea.innerHTML = ""; // Clear old results
+        resultArea.innerHTML = "";
 
         if (results.length === 0) {
             resultArea.innerHTML = "<p>No results found.</p>";
@@ -33,16 +29,17 @@
                 let div = document.createElement("div");
                 div.innerHTML = `<h3>${file.file}</h3>`;
                 file.matches.forEach(match => {
-                    div.innerHTML += `<p>${match}</p>`;
+                    div.innerHTML += `<p><strong>Timecode:</strong> ${match.timecode || "N/A"}<br>${match.text}</p>`;
                 });
                 resultArea.appendChild(div);
             });
         }
     } catch (error) {
-        console.error("Error during search:", error); // Log any errors
+        console.error("Error during search:", error);
         alert("An error occurred while processing your search.");
     }
 }
+
 
     
         function clearSearch() {
