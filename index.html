@@ -29,7 +29,7 @@
                 let div = document.createElement("div");
                 div.innerHTML = `<h3>${file.file}</h3>`;
                 file.matches.forEach(match => {
-                    div.innerHTML += `<p><strong>Timecode:</strong> ${match.timecode || "N/A"}<br>${match.text}</p>`;
+                    div.innerHTML += `<p>${match.timecode || ""} - ${match.text}</p>`;
                 });
                 resultArea.appendChild(div);
             });
@@ -39,6 +39,7 @@
         alert("An error occurred while processing your search.");
     }
 }
+
 
 
     
