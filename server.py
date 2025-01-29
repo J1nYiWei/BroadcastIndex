@@ -1,15 +1,15 @@
-from flask import Flask, request, jsonify, send_from_directory
 import os
+from flask import Flask, request, jsonify
 import re
 
 app = Flask(__name__)
 
-# Set OneDrive folder path
-ONEDRIVE_PATH = r"C:\Users\mysta\OneDrive\JW BroadcastIndex"
+# Set the path to the 'files' directory in your repository
+ONEDRIVE_PATH = os.path.join(os.path.dirname(__file__), 'files')
 
 @app.route('/')
 def home():
-    return send_from_directory('.', 'index.html')  # Serves index.html from the current directory
+    return "Welcome to the Broadcast Index API. Use /search?q=<your_query> to search."
 
 @app.route('/search')
 def search():
@@ -45,10 +45,6 @@ def search():
                     print(f"Error reading {file_path}: {e}")
 
     return jsonify(results)
-
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
