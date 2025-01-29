@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneDrive Text Search</title>
+    <script>
+        async function searchFiles() {
+            let query = document.getElementById("searchBox").value;
+            if (!query) {
+                alert("Enter a search term!");
+                return;
+            }
+
+            let response = await fetch(`/search?q=${encodeURIComponent(query)}`);
+            let results = await response.json();
+
+            let resultArea = document.getElementById("results");
+            resultArea.innerHTML = ""; // Clear old results
+
+            if (results.length === 0) {
+                resultArea.innerHTML = "<p>No results found.</p>";
+            } else {
+                results.forEach(file => {
+                    let div = document.createElement("div");
+                    div.innerHTML = `<h3>${file.file}</h3>`;
+                    file.matches.forEach(match => {
+                        div.innerHTML += `<p>${match}</p>`;
+                    });
+                    resultArea.appendChild(div);
+                });
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById("searchBox").value = "";
+            document.getElementById("results").innerHTML = "";
+        }
+    </script>
+</head>
+<body>
+    <h1>Search OneDrive Files</h1>
+    <input type="text" id="searchBox" placeholder="Enter text to search...">
+    <button onclick="searchFiles()">Search</button>
+    <button onclick="clearSearch()">Clear</button>
+    <div id="results"></div>
+</body>
+</html>
