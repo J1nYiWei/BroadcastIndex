@@ -28,32 +28,31 @@ def search():
                     with open(file_path, "r", encoding="utf-8") as f:
                         content = f.read()
 
-                        # Find all occurrences of the query
-                        matches = [m for m in re.finditer(re.escape(query), content, re.IGNORECASE)]
-                        if matches:
-                            occurrences = []
-                            for match in matches:
-                                start = max(match.start() - 50, 0)
-                                end = min(match.end() + 50, len(content))
-                                context = content[start:end].replace("\n", " ")
+                        # Split content into paragraphs
+                        paragraphs = content.split("\n\n")  # Assuming paragraphs are separated by double newlines
+                        matches_found = []
 
-                                # Highlight the query in the context
-                                highlighted = re.sub(
-                                    re.escape(query), 
-                                    f"<mark>{query}</mark>", 
-                                    context, 
+                        for paragraph in paragraphs:
+                            if re.search(re.escape(query), paragraph, re.IGNORECASE):
+                                # Highlight the query in the paragraph
+                                highlighted_paragraph = re.sub(
+                                    re.escape(query),
+                                    f"<mark>{query}</mark>",
+                                    paragraph,
                                     flags=re.IGNORECASE
                                 )
-                                occurrences.append(f"...{highlighted}...")
+                                matches_found.append(highlighted_paragraph)
 
+                        if matches_found:
                             results.append({
                                 "file": file,
-                                "matches": occurrences
+                                "matches": matches_found
                             })
                 except Exception as e:
                     print(f"Error reading {file_path}: {e}")
 
     return jsonify(results)
+
 
 
 if __name__ == '__main__':
