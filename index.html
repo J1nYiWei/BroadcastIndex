@@ -99,11 +99,11 @@ button:hover {
 /* Results Box */
 #results {
     width: 90%;
-    max-width: 800px;
-    min-width: 300px; /* ✅ Ensures results box never shrinks too much */
+    max-width: 1000px; /* ✅ Make it larger on big screens */
+    min-width: 300px; /* ✅ Prevent it from shrinking too much */
     text-align: left;
     margin-top: 20px;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: white;
@@ -140,6 +140,7 @@ mark {
     }
 
     #results {
+        width: 100%; /* ✅ Keep it compact on smaller screens */
         font-size: 0.9em;
     }
 }
@@ -147,6 +148,14 @@ mark {
             background-color: yellow;
             font-weight: bold;
         }
+
+        /* 🖥️ Large Screen Adjustments */
+    @media (min-width: 1200px) {
+        #results {
+            max-width: 1200px; /* ✅ Expands more on wide screens */
+            padding: 20px; /* ✅ Extra padding for readability */
+    }
+}
     </style>
 </head>
 <body>
@@ -161,7 +170,7 @@ mark {
             </form>
         <div id="results"></div>
     </div>
-    
+
     <!-- ✅ JavaScript Moved to End for Better Performance -->
     <script>
         async function searchFiles() {
