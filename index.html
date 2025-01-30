@@ -24,7 +24,7 @@ body {
 /* Responsive Container */
 form, #results {
     width: 100%;
-    max-width: 800px;
+    /* max-width: 800px; */
     min-width: 300px; /* ✅ Minimum width applied */
 }
 
@@ -41,7 +41,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 800px;
+    /*max-width: 800px;*/
     min-width: 300px; /* ✅ Minimum width */
 }
 
@@ -98,11 +98,11 @@ button:hover {
 
 /* Results Box */
 #results {
-    width: 100%; /* ✅ Allow full width */
-    max-width: 90vw; /* ✅ Expand based on viewport width */
-    min-width: 300px;
+    width: calc(100% - 40px); /* ✅ Full width minus 20px margin on each side */
+    min-width: 300px; /* ✅ Prevents shrinking too much */
+    max-width: 1400px; /* ✅ Expands up to 1400px on large screens */
     text-align: left;
-    margin-top: 20px;
+    margin: 20px auto; /* ✅ Centers the box and adds 20px margin on top */
     padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -140,8 +140,8 @@ mark {
     }
 
     #results {
-        width: 100%; /* ✅ Keep it compact on smaller screens */
         font-size: 0.9em;
+        width: calc(100% - 40px); /* ✅ Ensures margin on smaller screens */
     }
 }
         mark {
@@ -152,22 +152,8 @@ mark {
         /* 🖥️ Large Screen Adjustments */
     @media (min-width: 1400px) {
         #results {
-            max-width: 1400px; /* ✅ Expands more on wide screens */
-            padding: 20px; /* ✅ Extra padding for readability */
-    }
-}
-
-/* 🖥️ PC Screens (Larger than 1024px) */
-@media (min-width: 1024px) {
-    #results {
-        max-width: 1200px; /* ✅ Increase width on PC screens */
-    }
-}
-
-/* 🖥️ Extra-Wide Screens */
-@media (min-width: 1600px) {
-    #results {
-        max-width: 1400px; /* ✅ Even bigger for ultra-wide screens */
+        max-width: 1400px; /* ✅ Expands more on wide screens */
+        padding: 20px; /* ✅ Extra padding for readability */
     }
 }
 
