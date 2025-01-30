@@ -16,13 +16,41 @@
             background-color: #f9f9f9;
         }
 
-        form {
-            margin-bottom: 20px;
+        /* Responsive Title */
+        h1 {
+            font-size: 2em; /* Default size */
             text-align: center;
+}
+
+/* Responsive Form */
+        form {
+            display: flex;
+            flex-direction: column; /* Stack elements by default */
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+}
+
+/* Responsive Input Field */
+        input {
+            font-family: inherit;
+            font-size: 1.2em;
+            padding: 10px;
+            width: 100%;
+            max-width: 400px; /* Limits width */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+}
+
+/* Buttons in a Row on Larger Screens */
+        .button-group {
             display: flex;
             justify-content: center;
-            gap: 10px; /* Space between input and buttons */
-        }
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+}
 
         input, button {
             font-family: inherit;
@@ -33,18 +61,26 @@
             border-radius: 5px;
         }
 
+        /* Style for Buttons */
         button {
-            cursor: pointer;
+            font-family: inherit;
+            font-size: 1em;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             background-color: #007BFF;
             color: white;
-        }
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+}
 
         button:hover {
             background-color: #0056b3;
         }
 
+        /* Results Box */
         #results {
-            width: 80%;
+            width: 90%;
             max-width: 800px;
             text-align: left;
             margin-top: 20px;
@@ -52,10 +88,42 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: white;
-            overflow-y: auto; /* Allow scrolling if results overflow */
-            max-height: 60vh; /* Limit height of the results box */
-        }
+            overflow-y: auto; /* Allow scrolling */
+            max-height: 60vh;
+}
 
+    /* Highlighted Matches */
+        mark {
+            background-color: yellow;
+            font-weight: bold;
+}
+
+    /* 📱 Mobile Responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em; /* Reduce title size */
+    }
+
+        input {
+                font-size: 1em; /* Reduce input field size */
+                max-width: 100%; /* Make input fill screen width */
+    }
+
+        .button-group {
+                flex-direction: column; /* Stack buttons below input */
+                align-items: center;
+    }
+
+        button {
+                font-size: 0.9em;
+                width: 100%; /* Full width on small screens */
+                max-width: 250px;
+    }
+
+        #results {
+            font-size: 0.9em; /* Reduce text size */
+    }
+}
         mark {
             background-color: yellow;
             font-weight: bold;
@@ -66,8 +134,10 @@
     <h1>Search Broadcast Index</h1>
     <form onsubmit="event.preventDefault(); searchFiles();">
         <input type="text" id="searchBox" placeholder="Enter your search term...">
-        <button type="button" onclick="searchFiles()">Search</button>
-        <button type="button" onclick="clearSearch()">Clear</button>
+        <div class="button-group">
+            <button type="button" onclick="searchFiles()">Search</button>
+            <button type="button" onclick="clearSearch()">Clear</button>
+        </div>
     </form>
     <div id="results"></div>
 
