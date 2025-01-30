@@ -74,42 +74,43 @@
     <!-- ✅ JavaScript Moved to End for Better Performance -->
     <script>
         async function searchFiles() {
-            let query = document.getElementById("searchBox").value.trim();
-            if (!query) {
-                alert("Enter a search term!");
-                return;
-            }
+    let query = document.getElementById("searchBox").value.trim();
+    if (!query) {
+        alert("Enter a search term!");
+        return;
+    }
 
-            try {
-                let response = await fetch(`https://broadcastindex.onrender.com/search?q=${encodeURIComponent(query)}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                let results = await response.json();
-                let resultArea = document.getElementById("results");
-                resultArea.innerHTML = "";
-
-                if (results.length === 0) {
-                    resultArea.innerHTML = "<p>No results found.</p>";
-                } else {
-                    results.forEach(file => {
-                        let div = document.createElement("div");
-                        div.innerHTML = `<h3>${file.file}</h3><p><a href="${file.video_url}" target="_blank">🔗 Watch Video</a></p>`;
-
-                        file.matches.forEach(match => {
-                            // ✅ Adds filename + timestamp + text in results
-                            div.innerHTML += `<p>${match.timecode} - ${match.text}</p>`;
-                        });
-
-                        resultArea.appendChild(div);
-                    });
-                }
-            } catch (error) {
-                console.error("Error during search:", error);
-                alert("An error occurred while processing your search.");
-            }
+    try {
+        let response = await fetch(`https://broadcastindex.onrender.com/search?q=${encodeURIComponent(query)}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        let results = await response.json();
+        let resultArea = document.getElementById("results");
+        resultArea.innerHTML = "";
+
+        if (results.length === 0) {
+            resultArea.innerHTML = "<p>No results found.</p>";
+        } else {
+            results.forEach(file => {
+                let div = document.createElement("div");
+                div.innerHTML = `<h3>${file.file}</h3>`; // ✅ No "Watch Video" link
+
+                file.matches.forEach(match => {
+                    // ✅ Adds filename + timestamp + text in results
+                    div.innerHTML += `<p>${match.timecode} - ${match.text}</p>`;
+                });
+
+                resultArea.appendChild(div);
+            });
+        }
+    } catch (error) {
+        console.error("Error during search:", error);
+        alert("An error occurred while processing your search.");
+    }
+}
+
 
         function clearSearch() {
             document.getElementById("searchBox").value = "";
