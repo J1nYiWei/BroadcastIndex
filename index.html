@@ -99,8 +99,8 @@ button:hover {
 /* Results Box */
 #results {
     width: 90%;
-    max-width: 1000px; /* ✅ Make it larger on big screens */
-    min-width: 300px; /* ✅ Prevent it from shrinking too much */
+    max-width: 1200px; /* ✅ Larger by default */
+    min-width: 300px;
     text-align: left;
     margin-top: 20px;
     padding: 15px;
@@ -150,12 +150,20 @@ mark {
         }
 
         /* 🖥️ Large Screen Adjustments */
-    @media (min-width: 1200px) {
+    @media (min-width: 1400px) {
         #results {
-            max-width: 1200px; /* ✅ Expands more on wide screens */
+            max-width: 1400px; /* ✅ Expands more on wide screens */
             padding: 20px; /* ✅ Extra padding for readability */
     }
 }
+
+/* 🖥️ Extra-Wide Screens */
+@media (min-width: 1600px) {
+    #results {
+        max-width: 1600px; /* ✅ Even bigger for ultra-wide screens */
+    }
+}
+
     </style>
 </head>
 <body>
