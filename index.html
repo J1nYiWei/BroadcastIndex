@@ -98,8 +98,8 @@ button:hover {
 
 /* Results Box */
 #results {
-    width: 90%;
-    max-width: 1200px; /* ✅ Larger by default */
+    width: 100%; /* ✅ Allow full width */
+    max-width: 90vw; /* ✅ Expand based on viewport width */
     min-width: 300px;
     text-align: left;
     margin-top: 20px;
@@ -157,10 +157,17 @@ mark {
     }
 }
 
+/* 🖥️ PC Screens (Larger than 1024px) */
+@media (min-width: 1024px) {
+    #results {
+        max-width: 1200px; /* ✅ Increase width on PC screens */
+    }
+}
+
 /* 🖥️ Extra-Wide Screens */
 @media (min-width: 1600px) {
     #results {
-        max-width: 1600px; /* ✅ Even bigger for ultra-wide screens */
+        max-width: 1400px; /* ✅ Even bigger for ultra-wide screens */
     }
 }
 
