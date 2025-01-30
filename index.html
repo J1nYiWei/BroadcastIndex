@@ -7,14 +7,23 @@
 
     <style>
         body {
-            font-family: Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
+            body {
+    font-family: Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    min-width: 300px; /* ✅ Set minimum width */
+}
+
+/* Responsive Container */
+form, #results {
+    width: 100%;
+    max-width: 800px;
+    min-width: 300px; /* ✅ Minimum width applied */
+}
 
         /* Responsive Title */
         h1 {
@@ -32,24 +41,27 @@
 }
 
 /* Responsive Input Field */
-        input {
-            font-family: inherit;
-            font-size: 1.2em;
-            padding: 10px;
-            width: 100%;
-            max-width: 400px; /* Limits width */
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
+input {
+    font-family: inherit;
+    font-size: 1.2em;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    min-width: 300px; /* ✅ Ensure input field stays usable */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
 }
 
 /* Buttons in a Row on Larger Screens */
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            margin-top: 10px;
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    min-width: 300px; /* ✅ Minimum width applied */
+    margin-top: 10px;
 }
 
         input, button {
@@ -61,57 +73,57 @@
             border-radius: 5px;
         }
 
-        /* Style for Buttons */
-        button {
-            font-family: inherit;
-            font-size: 1em;
-            padding: 10px 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
+/* Style for Buttons */
+button {
+    font-family: inherit;
+    font-size: 1em;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    min-width: 120px; /* ✅ Prevents buttons from getting too small */
 }
 
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Results Box */
-        #results {
-            width: 90%;
-            max-width: 800px;
-            text-align: left;
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: white;
-            overflow-y: auto; /* Allow scrolling */
-            max-height: 60vh;
+/* Button Hover Effect */
+button:hover {
+    background-color: #0056b3;
 }
 
-    /* Highlighted Matches */
-        mark {
-            background-color: yellow;
-            font-weight: bold;
+/* Results Box */
+#results {
+    text-align: left;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    overflow-y: auto;
+    max-height: 60vh;
 }
 
-    /* 📱 Mobile Responsiveness */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 1.5em; /* Reduce title size */
+/* Highlighted Matches */
+mark {
+    background-color: yellow;
+    font-weight: bold;
+}
+
+/* 📱 Mobile Responsiveness */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5em; /* Reduce title size */
     }
 
-        input {
-                font-size: 1em; /* Reduce input field size */
-                max-width: 100%; /* Make input fill screen width */
+    input {
+        font-size: 1em;
+        max-width: 100%;
     }
 
-        .button-group {
-                flex-direction: column; /* Stack buttons below input */
-                align-items: center;
+    .button-group {
+        flex-direction: column;
+        align-items: center;
     }
 
         button {
