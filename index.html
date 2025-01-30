@@ -4,109 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Broadcast Index</title>
-    <script>
-       async function searchFiles() {
-    let query = document.getElementById("searchBox").value.trim();
-    if (!query) {
-        alert("Enter a search term!");
-        return;
-    }
 
-    try {
-        let response = await fetch(`https://broadcastindex.onrender.com/search?q=${encodeURIComponent(query)}`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
         }
 
-        let results = await response.json();
-        let resultArea = document.getElementById("results");
-        resultArea.innerHTML = "";
-
-        if (results.length === 0) {
-            resultArea.innerHTML = "<p>No results found.</p>";
-        } else {
-            results.forEach(file => {
-                let div = document.createElement("div");
-                div.innerHTML = `<h3>${file.file}</h3><p><a href="${file.video_url}" target="_blank">🔗 Watch Video</a></p>`;
-                
-                file.matches.forEach(match => {
-                    div.innerHTML += `<p>${match.timecode} - ${match.text}</p>`;
-                });
-
-                resultArea.appendChild(div);
-            });
+        form {
+            margin-bottom: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Space between input and buttons */
         }
-    } catch (error) {
-        console.error("Error during search:", error);
-        alert("An error occurred while processing your search.");
-    }
-}
 
-
-    
-        function clearSearch() {
-            document.getElementById("searchBox").value = "";
-            document.getElementById("results").innerHTML = "";
+        input, button {
+            font-family: inherit;
+            font-size: 16px;
+            padding: 10px;
+            margin: 0; /* Remove margin for better alignment */
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-    </script>
 
-<style>
-    body {
-        font-family: Verdana, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0;
-        padding: 20px;
-        background-color: #f9f9f9;
-    }
+        button {
+            cursor: pointer;
+            background-color: #007BFF;
+            color: white;
+        }
 
-    form {
-    margin-bottom: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    gap: 10px; /* Space between input and buttons */
-}
+        button:hover {
+            background-color: #0056b3;
+        }
 
-input, button {
-    font-family: inherit;
-    font-size: 16px;
-    padding: 10px;
-    margin: 0; /* Remove margin for better alignment */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+        #results {
+            width: 80%;
+            max-width: 800px;
+            text-align: left;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: white;
+            overflow-y: auto; /* Allow scrolling if results overflow */
+            max-height: 60vh; /* Limit height of the results box */
+        }
 
-button {
-    cursor: pointer;
-    background-color: #007BFF;
-    color: white;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-    #results {
-        width: 80%;
-        max-width: 800px;
-        text-align: left;
-        margin-top: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: white;
-        overflow-y: auto; /* Allow scrolling if results overflow */
-        max-height: 60vh; /* Limit height of the results box */
-    }
-
-    mark {
-        background-color: yellow;
-        font-weight: bold;
-    }
-</style>
-
+        mark {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Search Broadcast Index</h1>
@@ -116,5 +70,51 @@ button:hover {
         <button type="button" onclick="clearSearch()">Clear</button>
     </form>
     <div id="results"></div>
+
+    <!-- ✅ JavaScript Moved to End for Better Performance -->
+    <script>
+        async function searchFiles() {
+            let query = document.getElementById("searchBox").value.trim();
+            if (!query) {
+                alert("Enter a search term!");
+                return;
+            }
+
+            try {
+                let response = await fetch(`https://broadcastindex.onrender.com/search?q=${encodeURIComponent(query)}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                let results = await response.json();
+                let resultArea = document.getElementById("results");
+                resultArea.innerHTML = "";
+
+                if (results.length === 0) {
+                    resultArea.innerHTML = "<p>No results found.</p>";
+                } else {
+                    results.forEach(file => {
+                        let div = document.createElement("div");
+                        div.innerHTML = `<h3>${file.file}</h3><p><a href="${file.video_url}" target="_blank">🔗 Watch Video</a></p>`;
+
+                        file.matches.forEach(match => {
+                            // ✅ Adds filename + timestamp + text in results
+                            div.innerHTML += `<p>${match.timecode} - ${match.text}</p>`;
+                        });
+
+                        resultArea.appendChild(div);
+                    });
+                }
+            } catch (error) {
+                console.error("Error during search:", error);
+                alert("An error occurred while processing your search.");
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById("searchBox").value = "";
+            document.getElementById("results").innerHTML = "";
+        }
+    </script>
 </body>
 </html>
