@@ -60,8 +60,8 @@ input {
     font-size: 1.2em;
     padding: 10px;
     width: 100%;
-    max-width: 400px;
-    min-width: 300px; /* ✅ Ensures input never shrinks too much */
+    max-width: 400px; /* ✅ Default size for larger screens */
+    min-width: 300px; /* ✅ Prevent shrinking too much */
     border: 1px solid #ccc;
     border-radius: 5px;
     text-align: center;
@@ -133,11 +133,11 @@ mark {
         align-items: center;
     }
 
-    button {
-        font-size: 0.9em;
-        width: 100%;
-        max-width: 250px;
-    }
+        button {
+            font-size: 0.9em;
+            width: 100%;
+            max-width: 250px;
+        }
 
     #results {
         font-size: 0.9em;
@@ -154,6 +154,14 @@ mark {
         #results {
         max-width: 1400px; /* ✅ Expands more on wide screens */
         padding: 20px; /* ✅ Extra padding for readability */
+    }
+}
+
+/* 📱 Adjust for Smaller Screens */
+@media (max-width: 600px) {
+    input {
+        width: calc(100% - 20px); /* ✅ Full width minus 10px */
+        max-width: none; /* ✅ Removes max-width restriction */
     }
 }
 
